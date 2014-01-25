@@ -1,24 +1,122 @@
 var connection = null;
 
 function log(msg) {
-    $('<div></div>').append(document.createTextNode(msg)).prependTo($('#log'));
+    append_system_msg(msg);
 }
 
 function append_my_msg(msg) {
     var str = '<li class="right clearfix"> \
         <span class="chat-img pull-right"> \
-            <img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" alt="User Avatar" class="img-circle"> \
+            <img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" class="img-circle"> \
         </span> \
         <div class="chat-body clearfix"> \
             <div class="header"> \
-                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small> \
-                <strong class="pull-right primary-font">Nicola</strong> \
+                <strong class="pull-right primary-font">Me</strong> \
+                <small class=" text-muted"> \
+                    <span class="glyphicon glyphicon-time"></span>a moment ago \
+                </small> \
             </div> \
             <p>' + msg + '</p> \
         </div> \
     </li>';
 
-    $('#chat-list').append(str).listview('refresh');
+    $('#chat-list').append(str);
+    scroll_down();
+}
+
+function append_other_msg(msg) {
+    var str = '<li class="left clearfix"> \
+        <span class="chat-img pull-left"> \
+            <img src="http://placehold.it/50/55C1E7/fff&amp;text=OTHER" class="img-circle"> \
+        </span> \
+        <div class="chat-body clearfix"> \
+            <div class="header"> \
+                <strong class="primary-font">Other</strong> \
+                <small class="pull-right text-muted"> \
+                    <span class="glyphicon glyphicon-time"></span>a moment ago \
+                </small> \
+            </div> \
+            <p>' + msg  + '</p> \
+        </div> \
+    </li>';
+
+    $('#chat-list').append(str);
+    scroll_down();
+}
+
+function append_system_msg(msg) {
+    var str = '<li class="right clearfix"> \
+        <span class="chat-img pull-right"> \
+            <img src="http://placehold.it/50/4B0082/fff&amp;text=SYS" class="img-circle"> \
+        </span> \
+        <div class="chat-body clearfix"> \
+            <div class="header"> \
+                <strong class="pull-right primary-font">System Info</strong> \
+                <small class=" text-muted"> \
+                    <span class="glyphicon glyphicon-time"></span>a moment ago \
+                </small> \
+            </div> \
+            <p>' + msg + '</p> \
+        </div> \
+    </li>';
+
+    $('#chat-list').append(str);
+}
+
+function scroll_down() {
+    var foo = document.getElementById('chat-panel-body');
+    foo.scrollTop = foo.scrollHeight;
+}
+
+function append_friend_list(id, name) {
+    var str = '<div class="row user-row" id="user-' + id + '"> \
+        <div class="col-md-2"> \
+            <img class="img-circle" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=30"> \
+        </div> \
+        <div class="col-md-10"> \
+            <strong>' + name + '</strong><br> \
+            <span class="text-muted">' + id + '</span> \
+        </div> \
+    </div>';
+
+    $('#userlist').append(str);
+}
+
+var chat_with = chat_with || '100007680813408';
+var otr_buddy = otr_buddy || null;
+var otr_private_key = otr_private_key || null;
+    
+function start_chat(id) {
+    chat_with = id;
+    $('#chat-list').empty();
+    append_system_msg("Start to chatting with " + id);
+
+    var options = {
+        fragment_size: 140,
+        send_interval: 200,
+        debug: true,
+        priv: otr_private_key
+    };
+
+    otr_buddy = new OTR(options);
+
+    otr_buddy.on('ui', function(msg, encrypted) {
+        console.log("receive msg from buddy: " + msg + ', ' + encrypted);
+        append_other_msg(msg);
+    });
+    otr_buddy.on('io', function(msg) {
+        console.log("send msg to buddy: " + msg);
+        sendMessage(msg);
+    });
+    otr_buddy.on('error', function (err) {
+        console.error("error occurred: " + err)
+    });
+    otr_buddy.on('status', function (state) {
+        console.log(status);
+    });
+            
+    // otr_buddy.REQUIRE_ENCRYPTION = false;
+    otr_buddy.sendQueryMsg();
 }
 
 function onConnect(status) {
@@ -39,6 +137,8 @@ function onConnect(status) {
         connection.send($pres().tree());
     }
 }
+        // otr_buddy.sendMsg(msg);
+        // append_my_msg(message);
 
 function onMessage(msg) {
     var to = msg.getAttribute('to');
@@ -46,11 +146,12 @@ function onMessage(msg) {
     var type = msg.getAttribute('type');
     var elems = msg.getElementsByTagName('body');
 
+    console.log('msg type: ' + type);
+
     if (type === "chat" && elems.length > 0) {
         var body = elems[0];
 
-        log('I got a message from ' + from + ': ' +
-        Strophe.getText(body));
+        otr_buddy.receiveMsg(atob(Strophe.getText(body)));
     }
 
     // we must return true to keep the handler alive.
@@ -58,19 +159,16 @@ function onMessage(msg) {
     return true;
 }
 
-function sendMessage() {
-    var message = $('#message').get(0).value;
-    var to = '-' + $('#to').get(0).value + "@chat.facebook.com";
+function sendMessage(message) {
+    var to = '-' + chat_with + '@chat.facebook.com';
     
     if(message && to){
         var reply = $msg({
             to: to,
             type: 'chat'
         })
-        .cnode(Strophe.xmlElement('body', message));
+        .cnode(Strophe.xmlElement('body', btoa(message)));
         connection.send(reply.tree());
-
-        append_my_msg('Test');
     }
 }
 
@@ -85,10 +183,14 @@ $(document).ready( function () {
     //Strophe.log = function (level, msg) { log('LOG: ' + msg); };
     
     $('#btn-chat').bind('click', function () {
-        sendMessage();
+        var message = $('#btn-input').val();
+        otr_buddy.sendMsg(message);
     });
 
-    append_my_msg('Test');
+    // append_my_msg('Test');
+    // append_other_msg('test a test');
+
+    otr_private_key = new DSA();
 });
 
 
@@ -106,10 +208,29 @@ function login() {
         FB.api('/me/friends', function(response) {
             var to = $("#to");
             to.empty();
-          $.each(response.data, function(i,v){
-            to.append($("<option value='" + v.id + "'>" + v.name + "</option>"));
-          });
+
+              $.each(response.data, function(i,v){
+                    // console.log(i);
+                    // console.log(v);
+                    append_friend_list(v.id, v.name);
+
+                    $('#user-' + v.id).hover(
+                        function(){
+                            $(this).css("background", "#FFEBCD");
+                        },
+                        function(){
+                            $(this).css("background", "#FFF");
+                        }
+                    );
+
+                    $('#user-' + v.id).click(function() {
+                        start_chat(this.id.substring(5));
+                    });
+                
+              });
         });
+
+
             
       } else {
         connection.disconnect();

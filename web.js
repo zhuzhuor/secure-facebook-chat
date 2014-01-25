@@ -19,7 +19,7 @@ http.createServer(function (req, res) {
         fs.readFile('./index.html', function(err, data) {
             res.end(data);
         });
-    } else if (req.url.startsWith('/static/')) {
+    } else if (req.url.startsWith('/static/') || req.url.startsWith('/fonts/')) {
         var path = '.' + req.url;
         fs.exists(path, function(exists) {
             if (exists) {
