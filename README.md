@@ -1,4 +1,4 @@
-# [Secure (Facebook) Chat](http://secure-chat.herokuapp.com)
+# [Secure (Facebook) Chat](http://secure-chat.zhuzhu.org)
 
 * Encrypt your messages locally and send to Facebook!
 * Old messages will automatically fade away and may be deleted (like SnapChat).
