@@ -2,22 +2,41 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
+
+if (typeof String.prototype.startsWith !== 'function') {
+    String.prototype.startsWith = function (str){
+        return this.indexOf(str) === 0;
+    };
+}
+
+
 http.createServer(function (req, res) {
     var url_parts = url.parse(req.url);
     console.log(req.url);
-    console.log(url_parts);
+    // console.log(url_parts);
 
-    if (req.url === '/facebook.html') {
-        fs.readFile('./facebook.html', function (err,data) {
+    if (req.url === '/') {
+        fs.readFile('./static/chat.html', function(err, data) {
             res.end(data);
         });
-    } else if (req.url === '/facebook.js') {
-        fs.readFile('./facebook.js', function (err,data) {
-            res.end(data);
-        });
-    } else if (req.url === '/strophe.js') {
-        fs.readFile('./strophe.js', function (err,data) {
-            res.end(data);
+    } else if (req.url === '/favicon.ico') {
+        res.writeHead(404);
+        res.end();
+    } else if (req.url.startsWith('/static/')) {
+        var path = '.' + req.url;
+        fs.exists(path, function(exists) {
+            if (exists) {
+                res.writeHead(200);
+                fs.readFile(path, function (err, data) {
+                    res.end(data);
+                });
+            } else {
+                console.log("not exists: " + filename);
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                res.write('404 Not Found\n');
+                res.end();
+                return;
+            }
         });
     } else {
         if (url_parts.pathname === '/http-bind/') {
@@ -30,12 +49,12 @@ http.createServer(function (req, res) {
                 },
                 fb_req = http.request(options, function(fb_res) {
                     fb_res.on('data', function(fb_data) {
-                        console.log('xmpp response: ' + fb_data.toString());
+                        // console.log('xmpp response: ' + fb_data.toString());
                         res.end(fb_data.toString());
                     });
                 });
 
-                console.log('xmpp request: ' + chunk.toString());
+                // console.log('xmpp request: ' + chunk.toString());
                 fb_req.end(chunk.toString());
             });
         }

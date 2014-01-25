@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+    <title>XMPP with JavaScript connect with Facebook Oauth</title>
+    <meta property="fb:app_id" content="1456856884526437" />
+</head>
+<body>
+    <h1>Secure (Facebook) Chat</h1>
+    <fb:login-button scope="xmpp_login" on-login="login()"></fb:login-button>
+    <div id='login' style='text-align: center'>
+        <label for='to'>
+            to:
+        </label>
+        <select id='to'></select>
+        <label for='message'>
+            message:
+        </label>
+        <input type='text' id='message'>
+        <input type='button' id='send' value='send'>
+    </div>
+    <hr>
+    <div id='log'>
+    </div>
+
+    <div id="fb-root"></div>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script src='static/strophe.js'></script>
+    <script src='static/facebook.js'></script>
+    <script src='static/chat.js'></script>
+</body>
+</html>
