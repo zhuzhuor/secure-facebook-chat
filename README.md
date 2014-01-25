@@ -5,12 +5,12 @@
 * Only your recipients can decrypt your messages, not even Facebook or NSA!
 
 ## Teammates
-[@y26jin](https://github.com/y26jin)
-[@yinyanghu](https://github.com/yinyanghu)
+* [@y26jin](https://github.com/y26jin)
+* [@yinyanghu](https://github.com/yinyanghu)
 
 ## Dependencies
-[OTR.js](http://arlolra.github.io/otr/)
-[Strophe.js](http://strophe.im/strophejs/)
-[node-xmpp-bosh](https://github.com/dhruvbird/node-xmpp-bosh)
-[Node.js](http://nodejs.org/)
-[jQuery.js](http://jquery.com/)
+* [OTR.js](http://arlolra.github.io/otr/)
+* [Strophe.js](http://strophe.im/strophejs/)
+* [node-xmpp-bosh](https://github.com/dhruvbird/node-xmpp-bosh)
+* [Node.js](http://nodejs.org/)
+* [jQuery.js](http://jquery.com/)
