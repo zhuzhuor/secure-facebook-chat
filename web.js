@@ -41,7 +41,7 @@ http.createServer(function (req, res) {
     } else if (url_parts.pathname === '/http-bind/') {
         req.on('data', function(chunk) {
             var options = {
-                host: 'dev.zhuzhu.org',
+                host: 'secure-chat.zhuzhu.org',
                 port: 5280,
                 path: '/http-bind/',
                 method: 'POST'
