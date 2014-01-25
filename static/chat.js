@@ -66,6 +66,8 @@ function append_system_msg(msg) {
 function scroll_down() {
     var foo = document.getElementById('chat-panel-body');
     foo.scrollTop = foo.scrollHeight;
+    var chatbody = document.getElementById('chat-panel-body');
+    chatbody.setAttribute("style", "opacity:1");
 }
 
 function append_friend_list(id, name) {
@@ -190,6 +192,36 @@ $(document).ready( function () {
     // append_other_msg('test a test');
 
     otr_private_key = new DSA();
+
+
+     var chatbody = document.getElementById('chat-panel-body');
+        chatbody.addEventListener("mouseover",func1,false);
+        chatbody.addEventListener("mouseout",func2,false);
+        
+        var opa = 0.5;
+        var dim;
+        var isTimerOn = 0;
+        
+        function func1(){
+                opa = 1;
+                chatbody.setAttribute("style", "opacity:1");
+                
+                        clearTimeout(dim);
+
+        }
+        function func2(){
+                opa = opa - 0.1;
+                if(opa < 0.1) opa = 0.2;
+
+                var opacity_mod = "opacity:" + String(opa);
+
+                chatbody.setAttribute("style",opacity_mod);
+
+                dim = setTimeout( function () {func2();}, 500);
+                  
+                  isTimerOn = 1;
+
+        }
 });
 
 
