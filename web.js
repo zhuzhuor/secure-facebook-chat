@@ -1,6 +1,8 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+// var http = require('http');
+http.globalAgent.maxSockets = Infinity;
 
 
 if (typeof String.prototype.startsWith !== 'function') {
