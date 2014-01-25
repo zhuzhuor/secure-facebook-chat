@@ -1,7 +1,6 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
-// var http = require('http');
 http.globalAgent.maxSockets = Infinity;
 
 
@@ -65,3 +64,8 @@ http.createServer(function (req, res) {
 }).listen(port);
 
 console.log('Server running at http://127.0.0.1.xip.io:' + port + '/');
+
+process.on('uncaughtException', function(err) {
+    console.error('[ub.uku.js] Caught uncaughtException: ' + err, err.stack);
+    process.exit(213);
+});

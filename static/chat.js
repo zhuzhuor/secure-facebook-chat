@@ -185,43 +185,48 @@ $(document).ready( function () {
     
     $('#btn-chat').bind('click', function () {
         var message = $('#btn-input').val();
-        otr_buddy.sendMsg(message);
+        if (message && message !== '') {
+            otr_buddy.sendMsg(message);
+            append_my_msg(message);
+        }
+        $('#btn-input').val('');  // clear the input text
     });
-
-    // append_my_msg('Test');
-    // append_other_msg('test a test');
 
     otr_private_key = new DSA();
 
-
-     var chatbody = document.getElementById('chat-panel-body');
+    var chatbody = document.getElementById('chat-panel-body');
         chatbody.addEventListener("mouseover",func1,false);
         chatbody.addEventListener("mouseout",func2,false);
         
-        var opa = 0.5;
-        var dim;
-        var isTimerOn = 0;
-        
-        function func1(){
-                opa = 1;
-                chatbody.setAttribute("style", "opacity:1");
-                
-                        clearTimeout(dim);
+    var opa = 0.5;
+    var dim;
+    var isTimerOn = 0;
+    
+    function func1(){
+        opa = 1;
+        chatbody.setAttribute("style", "opacity:1");
+        clearTimeout(dim);
 
+    }
+    function func2(){
+            opa = opa - 0.1;
+            if(opa < 0.1) opa = 0.1;
+
+            var opacity_mod = "opacity:" + String(opa);
+
+            chatbody.setAttribute("style",opacity_mod);
+
+            dim = setTimeout( function () {func2();}, 500);
+              
+              isTimerOn = 1;
+
+    }
+
+    $("#btn-input").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#btn-chat").click();
         }
-        function func2(){
-                opa = opa - 0.1;
-                if(opa < 0.1) opa = 0.1;
-
-                var opacity_mod = "opacity:" + String(opa);
-
-                chatbody.setAttribute("style",opacity_mod);
-
-                dim = setTimeout( function () {func2();}, 500);
-                  
-                  isTimerOn = 1;
-
-        }
+    });
 });
 
 
@@ -284,6 +289,6 @@ window.fbAsyncInit = function() {
 (function() {
     var e = document.createElement('script');
     e.async = true;
-    e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+    e.src = 'https://connect.facebook.net/en_US/all.js';
     document.getElementById('fb-root').appendChild(e);
 }());
