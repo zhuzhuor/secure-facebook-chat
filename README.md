@@ -13,4 +13,4 @@
 * [Strophe.js](http://strophe.im/strophejs/)
 * [node-xmpp-bosh](https://github.com/dhruvbird/node-xmpp-bosh)
 * [Node.js](http://nodejs.org/)
-* [jQuery.js](http://jquery.com/)
+* [jQuery](http://jquery.com/)
