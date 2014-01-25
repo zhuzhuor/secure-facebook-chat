@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Starter Template for Bootstrap</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="./static/bootstrap.css" rel="stylesheet">
+        <link href="./static/index.css" rel="stylesheet" >
+    </head>
+
+    <body>
+        <div class="container">
+          <div id="wrapper">
+            <div class="row">
+              <div class="col-md-3 panel-primary" id="userlist">
+                  <div class="row user-row" id="user1">
+                      <div class="col-md-2">
+                          <img class="img-circle" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=30">
+                      </div>
+                      <div class="col-md-10">
+                          <strong>First</strong><br>
+                          <span class="text-muted">User level: Administrator</span>
+                      </div>
+                  </div>
+
+                  <div class="row user-row" id="user2">
+                      <div class="col-md-2">
+                          <img class="img-circle" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=30" alt="User Pic">
+                      </div>
+                      <div class="col-md-10">
+                          <strong>First</strong><br>
+                          <span class="text-muted">User level: Administrator</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-9" id="chatbox">
+              <!-- <div class="col-md-9"> -->
+                  <div class="panel panel-primary">
+
+                      <div class="panel-body" id="chat-panel-body">
+                          <ul class="chat" id='chat-list'>
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="http://placehold.it/50/55C1E7/fff&amp;text=U" alt="User Avatar" class="img-circle">
+                              </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <strong class="primary-font">Masud</strong> <small class="pull-right text-muted">
+                                          <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                  </div>
+                                  <p>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                  dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                              </li>
+                              <li class="right clearfix"><span class="chat-img pull-right">
+                                  <img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" alt="User Avatar" class="img-circle">
+                              </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                      <strong class="pull-right primary-font">Nicola</strong>
+                                  </div>
+                                  <p>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                  dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                              </li>
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="http://placehold.it/50/55C1E7/fff&amp;text=U" alt="User Avatar" class="img-circle">
+                              </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <strong class="primary-font">Masud</strong> <small class="pull-right text-muted">
+                                          <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                  </div>
+                                  <p>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                  dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                              </li>
+                              <li class="right clearfix"><span class="chat-img pull-right">
+                                  <img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" alt="User Avatar" class="img-circle">
+                              </span>
+                              <div class="chat-body clearfix">
+                                  <div class="header">
+                                      <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
+                                      <strong class="pull-right primary-font">Nicola</strong>
+                                  </div>
+                                  <p>
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                  dolor, quis ullamcorper ligula sodales.
+                                  </p>
+                              </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-footer">
+                          <div class="input-group">
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here...">
+                              <span class="input-group-btn">
+                                  <button class="btn btn-warning btn-sm" id="btn-chat">Send</button>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div> 
+        <fb:login-button scope="xmpp_login" on-login="login()"></fb:login-button>
+        <div id="log"></div>
+      </div>
+
+    <div id="fb-root"></div>
+        <script src="./static/jquery.min.js"></script>
+        <!-- <script src="./static/bootstrap.min.js"></script> -->
+        <script src='./static/strophe.js'></script>
+        <script src='./static/facebook.js'></script>
+        <script src='./static/chat.js'></script>
+    </body>
+</html>
