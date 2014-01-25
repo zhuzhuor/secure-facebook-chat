@@ -39,9 +39,9 @@ http.createServer(function (req, res) {
         req.on('data', function(chunk) {
             var options = {
                 host: 'secure-chat-bosh.herokuapp.com',
-            port: 80,
-            path: '/http-bind/',
-            method: 'POST'
+                port: 80,
+                path: '/http-bind/',
+                method: 'POST'
             },
             fb_req = http.request(options, function(fb_res) {
                 fb_res.on('data', function(fb_data) {

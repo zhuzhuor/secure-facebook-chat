@@ -137,8 +137,7 @@ function onConnect(status) {
         connection.send($pres().tree());
     }
 }
-        // otr_buddy.sendMsg(msg);
-        // append_my_msg(message);
+
 
 function onMessage(msg) {
     var to = msg.getAttribute('to');
