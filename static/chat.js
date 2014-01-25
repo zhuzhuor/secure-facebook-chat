@@ -4,6 +4,23 @@ function log(msg) {
     $('<div></div>').append(document.createTextNode(msg)).prependTo($('#log'));
 }
 
+function append_my_msg(msg) {
+    var str = '<li class="right clearfix"> \
+        <span class="chat-img pull-right"> \
+            <img src="http://placehold.it/50/FA6F57/fff&amp;text=ME" alt="User Avatar" class="img-circle"> \
+        </span> \
+        <div class="chat-body clearfix"> \
+            <div class="header"> \
+                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small> \
+                <strong class="pull-right primary-font">Nicola</strong> \
+            </div> \
+            <p>' + msg + '</p> \
+        </div> \
+    </li>';
+
+    $('#chat-list').append(str).listview('refresh');
+}
+
 function onConnect(status) {
     if (status === Strophe.Status.CONNECTING) {
         log('Connecting...');
@@ -53,7 +70,7 @@ function sendMessage() {
         .cnode(Strophe.xmlElement('body', message));
         connection.send(reply.tree());
 
-        log('I sent ' + to + ': ' + message);
+        append_my_msg('Test');
     }
 }
 
@@ -67,9 +84,11 @@ $(document).ready( function () {
     // Uncomment the following line to see all the debug output.
     //Strophe.log = function (level, msg) { log('LOG: ' + msg); };
     
-    $('#send').bind('click', function () {
+    $('#btn-chat').bind('click', function () {
         sendMessage();
     });
+
+    append_my_msg('Test');
 });
 
 
@@ -93,12 +112,15 @@ function login() {
         });
             
       } else {
-       connection.disconnect();
+        connection.disconnect();
       }
     });
 }
 
 
+
+
+// 
 window.fbAsyncInit = function() {
     FB.init({appId: '1456856884526437', status: true, cookie: true,
         xfbml: true});
