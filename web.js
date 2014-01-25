@@ -11,6 +11,8 @@ if (typeof String.prototype.startsWith !== 'function') {
     };
 }
 
+var port = process.env.PORT || 1337;
+
 
 http.createServer(function (req, res) {
     var url_parts = url.parse(req.url);
@@ -60,6 +62,6 @@ http.createServer(function (req, res) {
         res.end();
     }
 
-}).listen(process.env.PORT || 1337);
+}).listen(port);
 
-console.log('Server running at http://127.0.0.1.xip.io:' + process.env.PORT + '/');
+console.log('Server running at http://127.0.0.1.xip.io:' + port + '/');

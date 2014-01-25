@@ -211,7 +211,7 @@ $(document).ready( function () {
         }
         function func2(){
                 opa = opa - 0.1;
-                if(opa < 0.1) opa = 0.2;
+                if(opa < 0.1) opa = 0.1;
 
                 var opacity_mod = "opacity:" + String(opa);
 
