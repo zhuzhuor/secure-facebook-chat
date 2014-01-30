@@ -1,4 +1,5 @@
 var connection = null;
+var prefix = '?OTR?';
 
 function log(msg) {
     append_system_msg(msg);
@@ -67,7 +68,7 @@ function scroll_down() {
     var foo = document.getElementById('chat-panel-body');
     foo.scrollTop = foo.scrollHeight;
     var chatbody = document.getElementById('chat-panel-body');
-    chatbody.setAttribute("style", "opacity:1");
+    chatbody.setAttribute("style", "opacity: 0");
 }
 
 function append_friend_list(id, name) {
@@ -152,7 +153,11 @@ function onMessage(msg) {
     if (type === "chat" && elems.length > 0) {
         var body = elems[0];
 
-        otr_buddy.receiveMsg(atob(Strophe.getText(body)));
+        var message = Strophe.getText(body);
+        if (message.substring(0, prefix.length) === prefix) {
+            message = message.substring(prefix.length);
+            otr_buddy.receiveMsg(message);
+	}
     }
 
     // we must return true to keep the handler alive.
@@ -162,23 +167,25 @@ function onMessage(msg) {
 
 function sendMessage(message) {
     var to = '-' + chat_with + '@chat.facebook.com';
+
+    message = prefix + message;
     
     if(message && to){
         var reply = $msg({
             to: to,
             type: 'chat'
         })
-        .cnode(Strophe.xmlElement('body', btoa(message)));
+        .cnode(Strophe.xmlElement('body', message));
         connection.send(reply.tree());
     }
 }
 
 $(document).ready( function () {
-    connection = new Strophe.Connection('/http-bind/');
+    connection = new Strophe.Connection('http://secure-chat.zhuzhu.org:5280/http-bind/');
 
     // Uncomment the following lines to spy on the wire traffic.
-    //connection.rawInput = function (data) { log('RECV: ' + data); };
-    //connection.rawOutput = function (data) { log('SEND: ' + data); };
+    connection.rawInput = function (data) { console.log('RECV: ' + data); };
+    connection.rawOutput = function (data) { console.log('SEND: ' + data); };
 
     // Uncomment the following line to see all the debug output.
     //Strophe.log = function (level, msg) { log('LOG: ' + msg); };
