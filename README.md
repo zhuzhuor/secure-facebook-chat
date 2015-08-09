@@ -1,9 +1,10 @@
-# [Secure (Facebook) Chat](http://secure-chat.zhuzhu.org)
+# Secure (Facebook) Chat
 
-* Encrypt your messages locally and send to Facebook!
-* Old messages will automatically fade away and may be deleted (like SnapChat).
-* Only your recipients can decrypt your messages, not even Facebook or NSA!
-* (This is still an unfinished project! Please don't rely on it.)
+Encrypt your messages locally and send to Facebook! Only your recipients will decrypt your messages!
+
+*A 24-hour Facebook Hackathon project!*
+
+Note: Deprecated because [Facebook closed their chat APIs](https://developers.facebook.com/docs/chat). 
 
 ## Teammates
 * [@y26jin](https://github.com/y26jin)
